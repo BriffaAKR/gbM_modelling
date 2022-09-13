@@ -17,8 +17,8 @@ cd intothatfolder
 * bullet point2
 
 
-1 iteration
-2 iteration
+1. iteration
+2. iteration
 
 
 column | column | column
