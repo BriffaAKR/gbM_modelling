@@ -1,0 +1,184 @@
+m1001_samples_meth_status_mCG_density_RL_SRX1665031.tsv
+SRX1665031
+RL
+
+m1001_samples_meth_status_mCG_density_RL_SRX2190758.tsv
+SRX2190758
+RL
+
+m1001_samples_meth_status_mCG_density_RL_SRX1665093.tsv
+SRX1665093
+RL
+
+m1001_samples_meth_status_mCG_density_RL_SRX1664823.tsv
+SRX1664823
+RL
+
+m1001_samples_meth_status_mCG_density_RL_SRX1664799.tsv
+SRX1664799
+RL
+
+m1001_samples_meth_status_mCG_density_RL_SRX1664825.tsv
+SRX1664825
+RL
+
+m1001_samples_meth_status_mCG_density_RL_SRX1665000.tsv
+SRX1665000
+RL
+
+m1001_samples_meth_status_mCG_density_RL_SRX1664827.tsv
+SRX1664827
+RL
+
+m1001_samples_meth_status_mCG_density_RL_SRX1665061.tsv
+SRX1665061
+RL
+
+OneDrive_1_10-14-2021.zip
+
+
+
+m1001_samples_meth_status_mCG_density_RL_SRX248646.tsv
+SRX248646
+RL
+
+m1001_samples_meth_status_mCG_density_RL_SRX1664770.tsv
+SRX1664770
+RL
+
+m1001_samples_meth_status_mCG_density_RL_SRX1665029.tsv
+SRX1665029
+RL
+
+m1001_samples_meth_status_mCG_density_RL_SRX1664777.tsv
+SRX1664777
+RL
+
+m1001_samples_meth_status_mCG_density_RL_SRX1664772.tsv
+SRX1664772
+RL
+
+m1001_samples_meth_status_mCG_density_RL_SRX1664808.tsv
+SRX1664808
+RL
+
+m1001_samples_meth_status_mCG_density_RL_SRX1664781.tsv
+SRX1664781
+RL
+
+m1001_samples_meth_status_mCG_density_RL_SRX1664762.tsv
+SRX1664762
+RL
+
+m1001_samples_meth_status_mCG_density_RL_SRX1664769.tsv
+SRX1664769
+RL
+
+m1001_samples_meth_status_mCG_density_RL_SRX1664776.tsv
+SRX1664776
+RL
+
+m1001_samples_meth_status_mCG_density_RL_SRX1665090.tsv
+SRX1665090
+RL
+
+m1001_samples_meth_status_mCG_density_RL_SRX1665086.tsv
+SRX1665086
+RL
+
+m1001_samples_meth_status_mCG_density_RL_SRX1665039.tsv
+SRX1665039
+RL
+
+m1001_samples_meth_status_mCG_density_RL_SRX1664995.tsv
+SRX1664995
+RL
+
+           Decile
+Code             
+SRX1665031     RL
+SRX2190758     RL
+SRX1665093     RL
+SRX1664823     RL
+SRX1664799     RL
+SRX1664825     RL
+SRX1665000     RL
+SRX1664827     RL
+SRX1665061     RL
+                 
+SRX248646      RL
+SRX1664770     RL
+SRX1665029     RL
+SRX1664777     RL
+SRX1664772     RL
+SRX1664808     RL
+SRX1664781     RL
+SRX1664762     RL
+SRX1664769     RL
+SRX1664776     RL
+SRX1665090     RL
+SRX1665086     RL
+SRX1665039     RL
+SRX1664995     RL
+0 yes!!!! RL RL
+1 yes!!!! RL RL
+2 yes!!!! RL RL
+3 yes!!!! RL RL
+4 yes!!!! RL RL
+5 yes!!!! RL RL
+6 yes!!!! RL RL
+7 yes!!!! RL RL
+8 yes!!!! RL RL
+9 yes!!!!  RL
+10 yes!!!! RL RL
+11 yes!!!! RL RL
+12 yes!!!! RL RL
+13 yes!!!! RL RL
+14 yes!!!! RL RL
+15 yes!!!! RL RL
+16 yes!!!! RL RL
+17 yes!!!! RL RL
+18 yes!!!! RL RL
+19 yes!!!! RL RL
+20 yes!!!! RL RL
+already have
+['SRX1665031', 'SRX2190758', 'SRX1665093', 'SRX1664823', 'SRX1664799', 'SRX1664825', 'SRX1665000', 'SRX1664827', 'SRX1665061', '', 'SRX248646', 'SRX1664770', 'SRX1665029', 'SRX1664777', 'SRX1664772', 'SRX1664808', 'SRX1664781', 'SRX1664762', 'SRX1664769', 'SRX1664776', 'SRX1665090', 'SRX1665086', 'SRX1665039', 'SRX1664995']
+
+will use
+['m1001_samples_meth_status_mCG_density_RL_SRX1664827.tsv', 'm1001_samples_meth_status_mCG_density_RL_SRX1664995.tsv', 'm1001_samples_meth_status_mCG_density_RL_SRX1665000.tsv', 'm1001_samples_meth_status_mCG_density_RL_SRX1665090.tsv', 'm1001_samples_meth_status_mCG_density_RL_SRX1665086.tsv', 'm1001_samples_meth_status_mCG_density_RL_SRX1664762.tsv', 'm1001_samples_meth_status_mCG_density_RL_SRX1664769.tsv', 'm1001_samples_meth_status_mCG_density_RL_SRX1664770.tsv', 'm1001_samples_meth_status_mCG_density_RL_SRX1664772.tsv', 'm1001_samples_meth_status_mCG_density_RL_SRX1664776.tsv', 'm1001_samples_meth_status_mCG_density_RL_SRX1664777.tsv', 'm1001_samples_meth_status_mCG_density_RL_SRX1664781.tsv', 'm1001_samples_meth_status_mCG_density_RL_SRX1664799.tsv', 'm1001_samples_meth_status_mCG_density_RL_SRX1664808.tsv', 'm1001_samples_meth_status_mCG_density_RL_SRX1664823.tsv', 'm1001_samples_meth_status_mCG_density_RL_SRX1664825.tsv', 'm1001_samples_meth_status_mCG_density_RL_SRX1665029.tsv', 'm1001_samples_meth_status_mCG_density_RL_SRX1665031.tsv', 'm1001_samples_meth_status_mCG_density_RL_SRX1665093.tsv', 'm1001_samples_meth_status_mCG_density_RL_SRX1665039.tsv', 'm1001_samples_meth_status_mCG_density_RL_SRX1665061.tsv']
+
+missing
+[]
+
+['RL', 'RL', 'RL', 'RL', 'RL', 'RL', 'RL', 'RL', 'RL', '', 'RL', 'RL', 'RL', 'RL', 'RL', 'RL', 'RL', 'RL', 'RL', 'RL', 'RL', 'RL', 'RL', 'RL']
+['m1001_samples_meth_status_mCG_density_RL_SRX1664827.tsv']
+['m1001_samples_meth_status_mCG_density_RL_SRX1664995.tsv']
+['m1001_samples_meth_status_mCG_density_RL_SRX1665000.tsv']
+['m1001_samples_meth_status_mCG_density_RL_SRX1665090.tsv']
+['m1001_samples_meth_status_mCG_density_RL_SRX1665086.tsv']
+['m1001_samples_meth_status_mCG_density_RL_SRX1664762.tsv']
+['m1001_samples_meth_status_mCG_density_RL_SRX1664769.tsv']
+['m1001_samples_meth_status_mCG_density_RL_SRX1664770.tsv']
+['m1001_samples_meth_status_mCG_density_RL_SRX1664772.tsv']
+['m1001_samples_meth_status_mCG_density_RL_SRX1664776.tsv']
+['m1001_samples_meth_status_mCG_density_RL_SRX1664777.tsv']
+['m1001_samples_meth_status_mCG_density_RL_SRX1664781.tsv']
+['m1001_samples_meth_status_mCG_density_RL_SRX1664799.tsv']
+['m1001_samples_meth_status_mCG_density_RL_SRX1664808.tsv']
+['m1001_samples_meth_status_mCG_density_RL_SRX1664823.tsv']
+['m1001_samples_meth_status_mCG_density_RL_SRX1664825.tsv']
+['m1001_samples_meth_status_mCG_density_RL_SRX1665029.tsv']
+['m1001_samples_meth_status_mCG_density_RL_SRX1665031.tsv']
+['m1001_samples_meth_status_mCG_density_RL_SRX1665093.tsv']
+['m1001_samples_meth_status_mCG_density_RL_SRX1665039.tsv']
+['m1001_samples_meth_status_mCG_density_RL_SRX1665061.tsv']
+
+
+                                                   0
+0  m1001_samples_meth_status_mCG_density_RL_SRX16...
+1  m1001_samples_meth_status_mCG_density_RL_SRX16...
+2  m1001_samples_meth_status_mCG_density_RL_SRX16...
+3  m1001_samples_meth_status_mCG_density_RL_SRX16...
+4  m1001_samples_meth_status_mCG_density_RL_SRX16...
+['m1001_samples_meth_status_mCG_density_RL_SRX1664827.tsv', 'm1001_samples_meth_status_mCG_density_RL_SRX1664995.tsv', 'm1001_samples_meth_status_mCG_density_RL_SRX1665000.tsv', 'm1001_samples_meth_status_mCG_density_RL_SRX1665090.tsv', 'm1001_samples_meth_status_mCG_density_RL_SRX1665086.tsv', 'm1001_samples_meth_status_mCG_density_RL_SRX1664762.tsv', 'm1001_samples_meth_status_mCG_density_RL_SRX1664769.tsv', 'm1001_samples_meth_status_mCG_density_RL_SRX1664770.tsv', 'm1001_samples_meth_status_mCG_density_RL_SRX1664772.tsv', 'm1001_samples_meth_status_mCG_density_RL_SRX1664776.tsv', 'm1001_samples_meth_status_mCG_density_RL_SRX1664777.tsv', 'm1001_samples_meth_status_mCG_density_RL_SRX1664781.tsv', 'm1001_samples_meth_status_mCG_density_RL_SRX1664799.tsv', 'm1001_samples_meth_status_mCG_density_RL_SRX1664808.tsv', 'm1001_samples_meth_status_mCG_density_RL_SRX1664823.tsv', 'm1001_samples_meth_status_mCG_density_RL_SRX1664825.tsv', 'm1001_samples_meth_status_mCG_density_RL_SRX1665029.tsv', 'm1001_samples_meth_status_mCG_density_RL_SRX1665031.tsv', 'm1001_samples_meth_status_mCG_density_RL_SRX1665093.tsv', 'm1001_samples_meth_status_mCG_density_RL_SRX1665039.tsv', 'm1001_samples_meth_status_mCG_density_RL_SRX1665061.tsv']
+21
