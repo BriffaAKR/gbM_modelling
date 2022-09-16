@@ -1,3 +1,6 @@
+# old now redundant notes
+
+
 currently running:
 
 ###
