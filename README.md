@@ -7,7 +7,7 @@ git clone -c core.longpaths=true https://github.com/BriffaAKR/gbM_modelling.git
 
 ## How to run the code
 
-Use this bash script to start and good luck
+In progress
 
 ```
 mkdir crazydirectorystructure
