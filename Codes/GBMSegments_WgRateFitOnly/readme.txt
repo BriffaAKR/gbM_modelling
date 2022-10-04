@@ -1,0 +1,2 @@
+Folder containing codes used to run simulations on the 'Highly methylated segments' (GBMSegments) annotation. 
+Use parameters that were fitted to gain/loss rate distributions only, using 'Whole Gene' annotation for gbM genes. 
