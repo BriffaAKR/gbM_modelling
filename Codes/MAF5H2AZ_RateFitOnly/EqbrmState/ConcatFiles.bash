@@ -9,7 +9,7 @@
 # script to concatinate some files
 
 # declare filename_start
-filename_start="MAF5_H2AZWT_EqbrmOutput_RatesOnlyFit_Pchoice_Excl_InitialState_Expt_Ngen_1E5_"
+filename_start="MAF5_H2AZWT_EqbrmOutput_RatesOnlyFit_Pchoice_Excl_InitialState_100U_Ngen_1E5_"
 
 folder_1="Output_batch_files/CodeProgress/"
 
