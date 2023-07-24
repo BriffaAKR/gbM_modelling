@@ -98,6 +98,8 @@ file_in_LocusProperties_Data = os.path.join('Output_files', filename_start_Dat +
 file_in_LocusProperties_Sim = os.path.join('Output_files', filename_start_Sim + 'LocusProperties'+filename_ending)
 
 file_in_Mcorrn_Data = os.path.join('Output_files', filename_start_Dat + 'Mcorrn_Dat'+filename_ending)
+file_in_NonX_CGcorrn_Data = os.path.join('Output_files', filename_start_Dat + 'NonX_CGcorrn_Dat'+filename_ending)
+file_in_All_CGcorrn_Data = os.path.join('Output_files', filename_start_Dat + 'All_CGcorrn_Dat'+filename_ending)
 file_in_Mcorrn_Sim = os.path.join('Output_files', filename_start_Sim + 'Mcorrn_Sim'+filename_ending)
 
 file_in_CodeProgress_Data = os.path.join('Output_files', filename_start_Dat + 'CodeProgress'+filename_ending)
@@ -117,14 +119,20 @@ print()
 # add up total number of Non-missing data pairs in data for normalisation
 CodeProgress_Data_df = pd.read_csv(file_in_CodeProgress_Data, sep="\t{1}",engine='python')
 NonX_pairs_total_Data = CodeProgress_Data_df['NonX_pairs_total'].sum()
-print('Norm_data', NonX_pairs_total_Data)
-
+All_pairs_total_Data = CodeProgress_Data_df['All_pairs_total'].sum()
+print('NonX_pairs_total_Data', NonX_pairs_total_Data)
+print('All_pairs_total_Data', All_pairs_total_Data)
+print()
 NonX_pairs_total_Sim = (LocusProperties_Sim_df['N_CG']**2).sum()*N_reps
 print('Norm_Sim',NonX_pairs_total_Sim)
 print()
 
 Mcorrn_Data_df = pd.read_csv(file_in_Mcorrn_Data, sep="\t{1}",engine='python',header=None)
 Mcorrn_Data_array = Mcorrn_Data_df.sum(axis=0).values
+NonX_CGcorrn_Data_df = pd.read_csv(file_in_NonX_CGcorrn_Data, sep="\t{1}",engine='python',header=None)
+NonX_CGcorrn_Data_array = NonX_CGcorrn_Data_df.sum(axis=0).values
+All_CGcorrn_Data_df = pd.read_csv(file_in_All_CGcorrn_Data, sep="\t{1}",engine='python',header=None)
+All_CGcorrn_Data_array = All_CGcorrn_Data_df.sum(axis=0).values
 
 Mcorrn_Sim_df = pd.read_csv(file_in_Mcorrn_Sim, sep="\t{1}",engine='python',header=None)
 Mcorrn_Sim_array = Mcorrn_Sim_df.sum(axis=0).values
@@ -177,8 +185,8 @@ ax.grid(b=True, which='major', color='lightgrey', linestyle=':',linewidth=1)
 y_scale = 1.0e-3
 y_scale_label = ' ($10^{-3})$'
 
-ax.plot(x_vals_corrns[2:], (Mcorrn_Sim_array[2:]/NonX_pairs_total_Sim)/y_scale,  linewidth = 1, color='k',label='Sim.')
-ax.plot(x_vals_corrns[2:], (Mcorrn_Data_array[2:]/NonX_pairs_total_Data)/y_scale,  linewidth = 1, color='green',label='Data')
+ax.plot(x_vals_corrns[2:], (Mcorrn_Sim_array[2:]/NonX_pairs_total_Sim)/y_scale,  linewidth = 1, color='k',label='740 reps. simulated')
+ax.plot(x_vals_corrns[2:], (Mcorrn_Data_array[2:]/NonX_pairs_total_Data)/y_scale,  linewidth = 1, color='green',label='740 Col-like data')
 
 print(np.sum(Mcorrn_Sim_array/NonX_pairs_total_Sim),np.sum(Mcorrn_Data_array/NonX_pairs_total_Data))
 
@@ -216,3 +224,117 @@ plt.show()
 # End Graph
 
 
+############
+
+# Start Graph
+fig, ax = plt.subplots(1,1,figsize=(6,3))
+
+for spine in ['left','right','top','bottom']:
+    ax.spines[spine].set_color('k')
+    ax.spines[spine].set_linewidth(0.8)
+ax.set_facecolor('white')
+
+#ax.grid(False)
+ax.grid(b=True, which='major', color='lightgrey', linestyle=':',linewidth=1)
+
+y_scale = 1.0e-3
+y_scale_label = ' ($10^{-3})$'
+
+# ax.plot(x_vals_corrns[2:], (Mcorrn_Sim_array[2:]/NonX_pairs_total_Sim)/y_scale,  linewidth = 1, color='k',label='740 reps. simulated')
+# ax.plot(x_vals_corrns[2:], (Mcorrn_Data_array[2:]/NonX_pairs_total_Data)/y_scale,  linewidth = 1, color='green',label='740 Col-like data')
+ax.plot(x_vals_corrns[2:], (NonX_CGcorrn_Data_array[2:]/NonX_pairs_total_Data)/y_scale,  linewidth = 1, color='orange',label='NonX CG-site correlation')
+ax.plot(x_vals_corrns[2:], (All_CGcorrn_Data_array[2:]/All_pairs_total_Data)/y_scale,  linewidth = 1, color='brown',label='All CG-site correlation')
+
+
+
+print(np.sum(NonX_CGcorrn_Data_array/NonX_pairs_total_Data),np.sum(All_CGcorrn_Data_array/All_pairs_total_Data))
+
+# from mpl_toolkits.axes_grid1.inset_locator import inset_axes
+# # gains inset
+# axins_0 = inset_axes(ax, width="60%", height="50%", borderpad=1)
+# axins_0.tick_params(axis='both', which='major', labelsize=14)
+# axins_0.set_xlim(0,20)
+# axins_0.set_ylim(0,0.02)
+# axins_0.plot(x_vals_corrns, Mcorrn_Sim_array,  linewidth = 1, color='k',label='$MM$-pairs Sim.')
+# axins_0.fill_between(x_vals_corrns, Mcorrn_Data_array,Mcorrn_Data_array+PairSep_XX_Data_array,  
+#                     alpha = 0.5, color='green',label='$MM$-pairs Data')
+
+
+ax.legend(fontsize=12,ncol=1,facecolor='white', framealpha=1.0)
+
+ax.set_xlim(0,500)
+#ax.set_ylim(0,0.02)
+
+
+ax.xaxis.set_tick_params(labelsize=12)
+ax.yaxis.set_tick_params(labelsize=12)
+
+ax.set_xlabel("CG-site pair separation (bp)", fontsize=12)
+ax.set_ylabel("Density"+y_scale_label, fontsize=12)
+
+fig.tight_layout()
+#fig.subplots_adjust(top=0.5)
+
+fig.savefig( os.path.join(GraphFolder,filename_start_Graph +"CGcorrn.png"))
+
+
+plt.show()
+# End Graph
+
+
+#####
+
+############
+
+# Start Graph
+fig, ax = plt.subplots(1,1,figsize=(6,3))
+
+for spine in ['left','right','top','bottom']:
+    ax.spines[spine].set_color('k')
+    ax.spines[spine].set_linewidth(0.8)
+ax.set_facecolor('white')
+
+#ax.grid(False)
+ax.grid(b=True, which='major', color='lightgrey', linestyle=':',linewidth=1)
+
+y_scale = 1.0e-3
+y_scale_label = ' ($10^{-3})$'
+
+ax.plot(x_vals_corrns[2:], (Mcorrn_Sim_array[2:]/NonX_pairs_total_Sim)/y_scale,  linewidth = 1, color='k',label='M-M pair; 740 reps. simulated')
+ax.plot(x_vals_corrns[2:], (Mcorrn_Data_array[2:]/NonX_pairs_total_Data)/y_scale,  linewidth = 1, color='green',label='M-M pair; 740 Col-like data')
+# ax.plot(x_vals_corrns[2:], (NonX_CGcorrn_Data_array[2:]/NonX_pairs_total_Data)/y_scale,  linewidth = 1, color='orange',label='NonX CG-site correlation')
+ax.plot(x_vals_corrns[2:], (All_CGcorrn_Data_array[2:]/All_pairs_total_Data)/y_scale,  linewidth = 1, color='darkorange',label='CG-CG pair; 740 Col-like data')
+
+
+
+# from mpl_toolkits.axes_grid1.inset_locator import inset_axes
+# # gains inset
+# axins_0 = inset_axes(ax, width="60%", height="50%", borderpad=1)
+# axins_0.tick_params(axis='both', which='major', labelsize=14)
+# axins_0.set_xlim(0,20)
+# axins_0.set_ylim(0,0.02)
+# axins_0.plot(x_vals_corrns, Mcorrn_Sim_array,  linewidth = 1, color='k',label='$MM$-pairs Sim.')
+# axins_0.fill_between(x_vals_corrns, Mcorrn_Data_array,Mcorrn_Data_array+PairSep_XX_Data_array,  
+#                     alpha = 0.5, color='green',label='$MM$-pairs Data')
+
+
+ax.legend(fontsize=12,ncol=1,facecolor='white', framealpha=1.0)
+
+ax.set_xlim(0,500)
+ax.set_ylim(0,1.)
+
+
+ax.xaxis.set_tick_params(labelsize=12)
+ax.yaxis.set_tick_params(labelsize=12)
+
+ax.set_xlabel("CG-site pair separation (bp)", fontsize=12)
+ax.set_ylabel("Density"+y_scale_label, fontsize=12)
+
+fig.tight_layout()
+#fig.subplots_adjust(top=0.5)
+
+fig.savefig( os.path.join(GraphFolder,filename_start_Graph +"MM_CGcorrn.png"))
+
+
+plt.show()
+# End Graph
