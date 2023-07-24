@@ -130,7 +130,18 @@ AllRepsMethFracs_Sim_df.set_index("gene_ID", inplace = True)
 AllRepsMethFracs_Sim_df = AllRepsMethFracs_Sim_df.drop([missing_gene_in_data_ID])
 print(file_in_AllRepsMethFracs_Sim)
 print('N_gene_Sim',len(AllRepsMethFracs_Sim_df))
+print(LocusProperties_data_df['Dset1_mu_meth_frac'].head())
+print(LocusProperties_sim_df['Sim_mu_meth_frac'].head())
+print()
 
+
+LocusProperties_data_df = LocusProperties_data_df.assign(Dset1_mu_X_frac=AllRepsXFracs_Data_df.drop('segment_number',axis=1).mean(axis=1))
+LocusProperties_data_df = LocusProperties_data_df.assign(
+    Dset1_mu_MfracDiff_Abs=np.abs(LocusProperties_data_df['Dset1_mu_meth_frac']-LocusProperties_sim_df['Sim_mu_meth_frac']))
+
+print(LocusProperties_data_df.head())
+print()
+print(AllRepsXFracs_Data_df.mean(axis=1).head())
 
 # title_sting_single_time = "No. sims. per gene = %d      Cell cycle duration = %.1f       No. of genes simulated = %d        Sim. time = %d gens.\n\
 # 'P' choice = %s      $\epsilon$ = variable      $\gamma_0$ = varialbe      $r_{div\\,\gamma} =$ %d      $r_{\gamma}$ = %d      $\lambda_{\gamma} =$ %.3f\n\
@@ -529,6 +540,7 @@ ax.set_xlabel("Methylation percentage", fontsize=12)
 ax.set_ylabel("Number of loci", fontsize=12)
 
 
+
 #fig.tight_layout()
 # fig.subplots_adjust(top=0.5)
 
@@ -539,3 +551,253 @@ plt.show()
 
 
 ################################################
+#N_plots_axi_0 = 4
+#N_plots_axj_0 = 4
+
+N_plots_axi_1 = 5
+N_plots_axj_1 = 5
+
+
+#N_CG_mins_0 = [5,10,25,60]
+#N_CG_maxs_0 = [10,25,60,500]
+
+N_CG_mins_1 = [5,8,18,28,100]
+N_CG_maxs_1 = [7,12,22,32,500]
+
+
+#CG_density_maxs_0 = [55.,47.,40.,10.]
+#CG_density_mins_0 = [1000.,55.,47.,40.]
+
+CG_density_maxs_1 = [55.,50.,45.,40.,10.]
+CG_density_mins_1 = [65.,55.,50.,45.,40.]
+
+fig, ax = plt.subplots(N_plots_axi_1,N_plots_axj_1,figsize=(N_plots_axj_1*3,N_plots_axi_1*2.8))
+
+x_start = 0.
+x_end = 100. 
+x_hist = np.arange(x_start+x_end/(2.*n_bin),x_end,x_end/n_bin)
+
+for axi in range(N_plots_axi_1):
+    for axj in range(N_plots_axj_1):
+
+        for spine in ['left','right','top','bottom']:
+            ax[axi,axj].spines[spine].set_color('k')
+            ax[axi,axj].spines[spine].set_linewidth(0.8)
+        ax[axi,axj].set_facecolor('white')
+        #ax.grid(False)
+        ax[axi,axj].grid(b=True, which='major', color='lightgrey', linestyle=':',linewidth=1)
+
+        #filter dataframes
+        # AllRepsMethFracs_Sim_df
+        # AllRepsMethFracs_Data_df
+
+
+        Temp_df = LocusProperties_data_df.loc[ ((LocusProperties_sim_df['N_CG'] >= N_CG_mins_1[axi]) &
+                                                    (LocusProperties_sim_df['N_CG'] < N_CG_maxs_1[axi]) & 
+                                                    (LocusProperties_sim_df['CG_density'] >= (1./CG_density_mins_1[axj])) &
+                                                    (LocusProperties_sim_df['CG_density'] < (1./CG_density_maxs_1[axj]))) ]
+
+        print(axi,axj)
+        print(N_CG_mins_1[axi], N_CG_maxs_1[axi])
+        print(CG_density_mins_1[axj],CG_density_maxs_1[axj])
+        print(len(Temp_df))
+        # order df on Dset1_mu_X_frac
+        Temp_df = Temp_df.sort_values(by='Dset1_mu_X_frac', ascending=[True])
+        print('Xfracs', Temp_df['Dset1_mu_X_frac'])
+
+
+        # Take ID with largest coverage
+        Temp_ID = Temp_df.index[0]
+        print(Temp_ID)
+        print('Dset1_mu_X_frac', Temp_df.loc[Temp_ID,'Dset1_mu_X_frac'])
+        print('Dset1_mu_MfracDiff_Abs',Temp_df.loc[Temp_ID,'Dset1_mu_MfracDiff_Abs'])
+
+
+        Temp_Sim_df = AllRepsMethFracs_Sim_df.loc[Temp_ID]
+        Temp_Data_df = AllRepsMethFracs_Data_df.loc[Temp_ID]
+
+
+        # # Temp_label = '$\mu_{{Model}}$ = %.1f' % (np.nanmean(Temp_Sim_df[temp_cols_list].values*values_scaler))
+
+        N_CG_label = "$N_{CG} = %d$" % (LocusProperties_data_df.loc[Temp_ID,'N_CG'])
+        CG_density_label = "$\\rho_{CG} = \\frac{{1}}{{%d}}$" % (1./LocusProperties_data_df.loc[Temp_ID,'CG_density'])
+        Title_label = "%s\n %s     %s" % (Temp_ID, N_CG_label, CG_density_label )
+
+        # dummy data
+        #ax[axi,axj].plot(x_hist,x_hist+1E5,linewidth=0,label=Title_label )
+
+        temp_cols_list = []
+        for i_temp in range(N_reps):
+            temp_cols_list.append('Dset1_meth_frac_'+str(i_temp))
+        hist_Sim, bins_Sim = np.histogram(Temp_Sim_df[temp_cols_list].values*values_scaler, bins=n_bin, range=(x_start,x_end))
+        # hist_Sim = hist_Sim/N_reps # normalise
+        ax[axi,axj].axvline(np.nanmean(Temp_Sim_df[temp_cols_list].values*values_scaler), linestyle=':', color='k')
+        ax[axi,axj].plot(x_hist, hist_Sim,  linewidth = 2, color='k')
+
+        temp_cols_list = []
+        for i_temp in range(N_reps):
+            temp_cols_list.append('Dset1_meth_frac_'+str(i_temp))
+        hist_Data, bins_Data = np.histogram(Temp_Data_df[temp_cols_list].values*values_scaler, bins=n_bin, range=(x_start,x_end))
+        # hist_Data = hist_Data/N_reps # normalise
+        ax[axi,axj].axvline(np.nanmean(Temp_Data_df[temp_cols_list].values*values_scaler), linestyle=':', color='g')
+        ax[axi,axj].plot(x_hist, hist_Data,  linewidth = 2, color='g', linestyle='--')
+
+
+
+        #fig.suptitle(title_sting_single_time, fontsize=12)
+        #ax[axi,axj].legend(fontsize=14,ncol=1,facecolor='white', framealpha=1.0,handlelength=0)
+
+        ax[axi,axj].set_xlim(-10,110)
+        #ax[axi,axj].set_ylim(0,200)
+
+        ax[axi,axj].xaxis.set_tick_params(labelsize=12)
+        ax[axi,axj].yaxis.set_tick_params(labelsize=12)
+
+        ax[axi,axj].set_title(Title_label, fontsize=14)
+
+        if (axi == N_plots_axi_1 -1):
+            ax[axi,axj].set_xlabel("Methylation\npercentage", fontsize=14)
+        if (axj == 0):
+            ax[axi,axj].set_ylabel("Frequency", fontsize=14)
+
+# ax[0,0].arrow(0, 920, 740, 0, fc='k', ec='k', clip_on=False, width=2.0, head_width=40, head_length=10)
+# ax[0,0].arrow(-80, 500, 0, -3850, fc='k', ec='k', clip_on=False, width=0.8, head_width=10, head_length=40)
+# ax[0,-1].annotate("Increasing CG-site density", (-80, 780), fontsize=14, annotation_clip=False)
+# ax[-1,0].annotate("Increasing locus size", (-70, 200), fontsize=14, annotation_clip=False,rotation=90)
+
+
+fig.tight_layout()
+#fig.subplots_adjust(top=0.5)
+
+fig.savefig( os.path.join(GraphFolder,filename_start_Graph +'Mfrac_dist_groups_Rho'+str(N_plots_axj_1)+'_NCG'+str(N_plots_axi_1)+'_HighCov_Egs1.png'), bbox_inches = 'tight')
+#fig.savefig( os.path.join(GraphFolder,filename_start_Graph +'Mfrac_dist_groups_Rho'+str(N_plots_axj_1)+'_NCG'+str(N_plots_axi_1)+'_SF7C.pdf'), bbox_inches = 'tight')
+
+plt.show()
+
+
+
+###########################################
+
+################################################
+#N_plots_axi_0 = 4
+#N_plots_axj_0 = 4
+
+N_plots_axi_1 = 5
+N_plots_axj_1 = 5
+
+
+#N_CG_mins_0 = [5,10,25,60]
+#N_CG_maxs_0 = [10,25,60,500]
+
+N_CG_mins_1 = [5,8,18,28,100]
+N_CG_maxs_1 = [7,12,22,32,500]
+
+
+#CG_density_maxs_0 = [55.,47.,40.,10.]
+#CG_density_mins_0 = [1000.,55.,47.,40.]
+
+CG_density_maxs_1 = [55.,50.,45.,40.,10.]
+CG_density_mins_1 = [65.,55.,50.,45.,40.]
+
+fig, ax = plt.subplots(N_plots_axi_1,N_plots_axj_1,figsize=(N_plots_axj_1*3,N_plots_axi_1*2.8))
+
+x_start = 0.
+x_end = 100. 
+x_hist = np.arange(x_start+x_end/(2.*n_bin),x_end,x_end/n_bin)
+
+for axi in range(N_plots_axi_1):
+    for axj in range(N_plots_axj_1):
+
+        for spine in ['left','right','top','bottom']:
+            ax[axi,axj].spines[spine].set_color('k')
+            ax[axi,axj].spines[spine].set_linewidth(0.8)
+        ax[axi,axj].set_facecolor('white')
+        #ax.grid(False)
+        ax[axi,axj].grid(b=True, which='major', color='lightgrey', linestyle=':',linewidth=1)
+
+        #filter dataframes
+        # AllRepsMethFracs_Sim_df
+        # AllRepsMethFracs_Data_df
+
+
+        Temp_df = LocusProperties_data_df.loc[ ((LocusProperties_sim_df['N_CG'] >= N_CG_mins_1[axi]) &
+                                                    (LocusProperties_sim_df['N_CG'] < N_CG_maxs_1[axi]) & 
+                                                    (LocusProperties_sim_df['CG_density'] >= (1./CG_density_mins_1[axj])) &
+                                                    (LocusProperties_sim_df['CG_density'] < (1./CG_density_maxs_1[axj]))) ]
+
+        print(axi,axj)
+        print(N_CG_mins_1[axi], N_CG_maxs_1[axi])
+        print(CG_density_mins_1[axj],CG_density_maxs_1[axj])
+        print(len(Temp_df))
+        # order df on Dset1_mu_X_frac
+        Temp_df = Temp_df.sort_values(by='Dset1_mu_MfracDiff_Abs', ascending=[True])
+        print('Dset1_mu_MfracDiff_Abs', Temp_df['Dset1_mu_MfracDiff_Abs'])
+
+        # Take ID with largest coverage
+        Temp_ID = Temp_df.index[0]
+        print(Temp_ID)
+        print('Dset1_mu_MfracDiff_Abs',Temp_df.loc[Temp_ID,'Dset1_mu_MfracDiff_Abs'])
+
+        Temp_Sim_df = AllRepsMethFracs_Sim_df.loc[Temp_ID]
+        Temp_Data_df = AllRepsMethFracs_Data_df.loc[Temp_ID]
+
+
+        # # Temp_label = '$\mu_{{Model}}$ = %.1f' % (np.nanmean(Temp_Sim_df[temp_cols_list].values*values_scaler))
+
+        N_CG_label = "$N_{CG} = %d$" % (LocusProperties_data_df.loc[Temp_ID,'N_CG'])
+        CG_density_label = "$\\rho_{CG} = \\frac{{1}}{{%d}}$" % (1./LocusProperties_data_df.loc[Temp_ID,'CG_density'])
+        Title_label = "%s\n %s     %s" % (Temp_ID, N_CG_label, CG_density_label )
+
+        # dummy data
+        #ax[axi,axj].plot(x_hist,x_hist+1E5,linewidth=0,label=Title_label )
+
+        temp_cols_list = []
+        for i_temp in range(N_reps):
+            temp_cols_list.append('Dset1_meth_frac_'+str(i_temp))
+        hist_Sim, bins_Sim = np.histogram(Temp_Sim_df[temp_cols_list].values*values_scaler, bins=n_bin, range=(x_start,x_end))
+        # hist_Sim = hist_Sim/N_reps # normalise
+        ax[axi,axj].axvline(np.nanmean(Temp_Sim_df[temp_cols_list].values*values_scaler), linestyle=':', color='k')
+        ax[axi,axj].plot(x_hist, hist_Sim,  linewidth = 2, color='k')
+
+        temp_cols_list = []
+        for i_temp in range(N_reps):
+            temp_cols_list.append('Dset1_meth_frac_'+str(i_temp))
+        hist_Data, bins_Data = np.histogram(Temp_Data_df[temp_cols_list].values*values_scaler, bins=n_bin, range=(x_start,x_end))
+        # hist_Data = hist_Data/N_reps # normalise
+        ax[axi,axj].axvline(np.nanmean(Temp_Data_df[temp_cols_list].values*values_scaler), linestyle=':', color='g')
+        ax[axi,axj].plot(x_hist, hist_Data,  linewidth = 2, color='g', linestyle='--')
+
+
+
+        #fig.suptitle(title_sting_single_time, fontsize=12)
+        #ax[axi,axj].legend(fontsize=14,ncol=1,facecolor='white', framealpha=1.0,handlelength=0)
+
+        ax[axi,axj].set_xlim(-10,110)
+        #ax[axi,axj].set_ylim(0,200)
+
+        ax[axi,axj].xaxis.set_tick_params(labelsize=12)
+        ax[axi,axj].yaxis.set_tick_params(labelsize=12)
+
+        ax[axi,axj].set_title(Title_label, fontsize=14)
+
+        if (axi == N_plots_axi_1 -1):
+            ax[axi,axj].set_xlabel("Methylation\npercentage", fontsize=14)
+        if (axj == 0):
+            ax[axi,axj].set_ylabel("Frequency", fontsize=14)
+
+ax[0,0].arrow(0, 920, 740, 0, fc='k', ec='k', clip_on=False, width=2.0, head_width=40, head_length=10)
+ax[0,0].arrow(-80, 500, 0, -3850, fc='k', ec='k', clip_on=False, width=0.8, head_width=10, head_length=40)
+ax[0,-1].annotate("Increasing CG-site density", (-80, 780), fontsize=14, annotation_clip=False)
+ax[-1,0].annotate("Increasing locus size", (-70, 200), fontsize=14, annotation_clip=False,rotation=90)
+
+fig.tight_layout()
+#fig.subplots_adjust(top=0.5)
+
+fig.savefig( os.path.join(GraphFolder,filename_start_Graph +'Mfrac_dist_groups_Rho'+str(N_plots_axj_1)+'_NCG'+str(N_plots_axi_1)+'_mu_MfracDiff_Egs1.png'), bbox_inches = 'tight')
+#fig.savefig( os.path.join(GraphFolder,filename_start_Graph +'Mfrac_dist_groups_Rho'+str(N_plots_axj_1)+'_NCG'+str(N_plots_axi_1)+'_SF7C.pdf'), bbox_inches = 'tight')
+
+plt.show()
+
+
+
+###########################################
