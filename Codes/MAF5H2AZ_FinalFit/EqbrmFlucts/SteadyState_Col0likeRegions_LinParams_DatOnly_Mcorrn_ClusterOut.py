@@ -69,6 +69,8 @@ filename_ending = 'batch_'+str(i_batch)+'.tsv'
 file_name_output_TEST = os.path.join('Output_batch_files/Output_TEST', filename_start + 'TEST_'+filename_ending)
 # file_name_output_SimulatedStates_ = os.path.join('Output_batch_files/SimulatedStates', filename_start + 'SimState_')
 file_name_output_Mcorrn_Dat = os.path.join('Output_batch_files/Mcorrn_Dat', filename_start + 'Mcorrn_Dat_'+filename_ending)
+file_name_output_NonX_CGcorrn_Dat = os.path.join('Output_batch_files/Mcorrn_Dat', filename_start + 'NonX_CGcorrn_Dat_'+filename_ending)
+file_name_output_All_CGcorrn_Dat = os.path.join('Output_batch_files/Mcorrn_Dat', filename_start + 'All_CGcorrn_'+filename_ending)
 # file_name_output_PairSeparationsMM_Sim = os.path.join('Output_batch_files/Correlations_Sim/PairSeparationsMM_Sim', filename_start + 'PairSeparationsMM_Sim_'+filename_ending)
 # file_name_output_PairSeparationsMU_Sim = os.path.join('Output_batch_files/Correlations_Sim/PairSeparationsMU_Sim', filename_start + 'PairSeparationsMU_Sim_'+filename_ending)
 # file_name_output_PairSeparationsUU_Sim = os.path.join('Output_batch_files/Correlations_Sim/PairSeparationsUU_Sim', filename_start + 'PairSeparationsUU_Sim_'+filename_ending)
@@ -145,7 +147,7 @@ TEST_headings = ['segment_no', 'gene_ID']
 # define column headings for SimStates
 SimState_headings = ['gene_ID','Chromosome','Start','End','Status']
 # define column headings for CodeProgress
-CodeProgress_headings = ['batch', 'N_gene', 'time_mins', 'N_reps', 'NonX_pairs_total']
+CodeProgress_headings = ['batch', 'N_gene', 'time_mins', 'N_reps', 'NonX_pairs_total', 'All_pairs_total']
 
 # if i_batch = 0 create output files and exit code using sys.exit()
 if i_batch == 0:
@@ -169,6 +171,9 @@ if i_batch == 0:
     #        line_writer.writerow(SimState_headings)
  #   create empty files for rest....
     open(file_name_output_Mcorrn_Dat,'w').close
+    open(file_name_output_NonX_CGcorrn_Dat,'w').close
+    open(file_name_output_All_CGcorrn_Dat,'w').close
+
     # open(file_name_output_PairSeparationsMM_Sim,'w').close
     # open(file_name_output_PairSeparationsMU_Sim,'w').close
     # open(file_name_output_PairSeparationsUU_Sim,'w').close
@@ -219,6 +224,9 @@ else:
     # for i_ in range(N_reps):
     #    open(file_name_output_SimulatedStates_+str(i_)+'_'+filename_ending,'w').close
     open(file_name_output_Mcorrn_Dat,'w').close
+    open(file_name_output_NonX_CGcorrn_Dat,'w').close
+    open(file_name_output_All_CGcorrn_Dat,'w').close
+
     # open(file_name_output_PairSeparationsMM_Sim,'w').close
     # open(file_name_output_PairSeparationsMU_Sim,'w').close
     # open(file_name_output_PairSeparationsUU_Sim,'w').close
@@ -1216,29 +1224,44 @@ def whole_locus_nearest_gaps_analysis(N_, state_in_, CG_positions_):
 def cal_Mcorrn_locus_data(N_CG_, state_in_, CG_positions_in_):
 
     MM_dist_list_ = [] # store list of distances between two M_sites
+    NonX_CG_dist_list_ = [] # store list of distances between CG_sites (not X)
+    All_CG_dist_list_ = [] # store list of distances between CG_sites (all sites)
+
     NonX_pairs_total_ = 0
+    All_pairs_total_ = 0
 
     for i_target_ in range(N_CG_):
-        if state_in_[i_target_] == 2:
-            for i_passive_ in range(N_CG_):
+
+        for i_passive_ in range(N_CG_):
+            CG_dist_temp = abs(CG_positions_in_[i_target_] - CG_positions_in_[i_passive_])
+
+            All_CG_dist_list_.append(CG_dist_temp)
+            All_pairs_total_ += 1
+
+            if state_in_[i_target_] == 2:
                 if state_in_[i_passive_] == 2:
                     NonX_pairs_total_ += 1
-                    MM_dist_temp = abs(CG_positions_in_[i_target_] - CG_positions_in_[i_passive_])
-                    MM_dist_list_.append(MM_dist_temp)
+                    MM_dist_list_.append(CG_dist_temp)
+                    NonX_CG_dist_list_.append(CG_dist_temp)
                 elif state_in_[i_passive_] == 0:
                     NonX_pairs_total_ += 1
-        if state_in_[i_target_] == 0:
-            for i_passive_ in range(N_CG_):
+                    NonX_CG_dist_list_.append(CG_dist_temp)
+
+            if state_in_[i_target_] == 0:
                 if state_in_[i_passive_] == 2:
                     NonX_pairs_total_ += 1
+                    NonX_CG_dist_list_.append(CG_dist_temp)
                 elif state_in_[i_passive_] == 0:
                     NonX_pairs_total_ += 1
+                    NonX_CG_dist_list_.append(CG_dist_temp)
 
 
     MM_dist_counts_, bins_dummy = np.histogram(MM_dist_list_, bins = N_corrns_bins,range=(-0.5,N_corrns_bins-0.5))
+    NonX_CG_dist_counts_, bins_dummy = np.histogram(NonX_CG_dist_list_, bins = N_corrns_bins,range=(-0.5,N_corrns_bins-0.5))
+    All_CG_dist_list_, bins_dummy = np.histogram(All_CG_dist_list_, bins = N_corrns_bins,range=(-0.5,N_corrns_bins-0.5))
 
 
-    return MM_dist_counts_, NonX_pairs_total_
+    return MM_dist_counts_, NonX_pairs_total_, NonX_CG_dist_counts_, All_CG_dist_list_, All_pairs_total_
 
 
 
@@ -1471,6 +1494,10 @@ r_LR1 = params.r_LR1
 
 Data_Mcorrn_counts = np.zeros(N_corrns_bins)
 NonX_pairs_total = 0
+
+Data_NonX_CGcorrn_counts = np.zeros(N_corrns_bins)
+Data_All_CGcorrn_counts = np.zeros(N_corrns_bins)
+All_pairs_total = 0
 
 # Col0_UU_gaps_counts = np.zeros(N_corrns_bins)
 # Col0_MU_gaps_counts = np.zeros(N_corrns_bins)
@@ -1708,9 +1735,13 @@ for i_gene in range(i_gene_start,i_gene_end):
                 break
 
             # call function to calcualte Mcorrn counts
-            Data_Mcorrn_counts_pending, NonX_pairs_total_temp = cal_Mcorrn_locus_data(N_CG_temp, state_expt_temp, CG_positions_gene_temp)
+            Data_Mcorrn_counts_pending, NonX_pairs_total_temp, NonX_CG_dist_list_pending, All_CG_dist_list_pending, All_pairs_total_temp \
+            = cal_Mcorrn_locus_data(N_CG_temp, state_expt_temp, CG_positions_gene_temp)
             Data_Mcorrn_counts = np.add(Data_Mcorrn_counts, Data_Mcorrn_counts_pending)
             NonX_pairs_total += NonX_pairs_total_temp
+            Data_NonX_CGcorrn_counts = np.add(Data_NonX_CGcorrn_counts,NonX_CG_dist_list_pending)
+            Data_All_CGcorrn_counts = np.add(Data_All_CGcorrn_counts,All_CG_dist_list_pending)
+            All_pairs_total += All_pairs_total_temp
 
             # # # gaps analysis on first expt. state
             # expt_UU_gaps_temp, expt_MU_gaps_temp, expt_MM_gaps_temp, expt_XX_gaps_temp = whole_locus_gaps_analysis(N_CG_temp, 
@@ -2166,6 +2197,20 @@ with open(temp_output_file,'a',newline='') as output_file:
    line_writer = csv.writer(output_file,delimiter='\t')
    line_writer.writerow(temp_output_list)
 
+# write out Pair correlations Histograms to file
+temp_output_list = Data_NonX_CGcorrn_counts
+temp_output_file = file_name_output_NonX_CGcorrn_Dat
+with open(temp_output_file,'a',newline='') as output_file:
+   line_writer = csv.writer(output_file,delimiter='\t')
+   line_writer.writerow(temp_output_list)
+
+# write out Pair correlations Histograms to file
+temp_output_list = Data_All_CGcorrn_counts
+temp_output_file = file_name_output_All_CGcorrn_Dat
+with open(temp_output_file,'a',newline='') as output_file:
+   line_writer = csv.writer(output_file,delimiter='\t')
+   line_writer.writerow(temp_output_list)
+
 
 # # write out Pair correlations Histograms to file
 # temp_output_list = Sim_MM_gaps_counts
@@ -2418,7 +2463,7 @@ timer_end_total = timer()
 
 with open(file_name_output_CodeProgress,'a',newline='') as output_file:
     line_writer = csv.writer(output_file,delimiter='\t')
-    line_writer.writerow([i_batch, i_gene+1, (timer_end_total - timer_start_total)/60.,N_ExptState_Dset1,NonX_pairs_total])
+    line_writer.writerow([i_batch, i_gene+1, (timer_end_total - timer_start_total)/60.,N_ExptState_Dset1,NonX_pairs_total, All_pairs_total])
 
 
 #print('end')

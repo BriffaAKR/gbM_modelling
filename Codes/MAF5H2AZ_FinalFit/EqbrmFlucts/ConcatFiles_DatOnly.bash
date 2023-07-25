@@ -78,6 +78,8 @@ filename_end_1="CodeProgress_batch_*"
 # filename_end_2h="PairSeparationsXX_Col0_batch_*"
 
 filename_end_3="Mcorrn_Dat_batch_*"
+filename_end_3a="NonX_CGcorrn_Dat_batch_*"
+filename_end_3b="All_CGcorrn_batch_*"
 # filename_end_3a="NearestPairSeparationsMM_Data_batch_*"
 # filename_end_3b="NearestPairSeparationsMU_Data_batch_*"
 # filename_end_3c="NearestPairSeparationsUU_Data_batch_*"
@@ -134,6 +136,8 @@ output_filename_end_1="CodeProgress.tsv"
 # output_filename_end_2h="PairSeparationsXX_Col0.tsv"
 
 output_filename_end_3="Mcorrn_Dat.tsv"
+output_filename_end_3a="NonX_CGcorrn_Dat.tsv"
+output_filename_end_3b="All_CGcorrn_Dat.tsv"
 # output_filename_end_3a="NearestPairSeparationsMM_Data.tsv"
 # output_filename_end_3b="NearestPairSeparationsMU_Data.tsv"
 # output_filename_end_3c="NearestPairSeparationsUU_Data.tsv"
@@ -189,6 +193,8 @@ input_filename_1="$folder_1$filename_start$filename_end_1"
 # input_filename_2h="$folder_2h$filename_start$filename_end_2h"
 
 input_filename_3="$folder_3$filename_start$filename_end_3"
+input_filename_3a="$folder_3$filename_start$filename_end_3a"
+input_filename_3b="$folder_3$filename_start$filename_end_3b"
 # input_filename_3a="$folder_3a$filename_start$filename_end_3a"
 # input_filename_3b="$folder_3b$filename_start$filename_end_3b"
 # input_filename_3c="$folder_3c$filename_start$filename_end_3c"
@@ -243,6 +249,8 @@ output_filename_1="$output_folder$filename_start$output_filename_end_1"
 # output_filename_2h="$output_folder$filename_start$output_filename_end_2h"
 
 output_filename_3="$output_folder$filename_start$output_filename_end_3"
+output_filename_3a="$output_folder$filename_start$output_filename_end_3a"
+output_filename_3b="$output_folder$filename_start$output_filename_end_3b"
 # output_filename_3a="$output_folder$filename_start$output_filename_end_3a"
 # output_filename_3b="$output_folder$filename_start$output_filename_end_3b"
 # output_filename_3c="$output_folder$filename_start$output_filename_end_3c"
@@ -298,8 +306,8 @@ cat $input_filename_1 > $output_filename_1
 # cat $input_filename_2h > $output_filename_2h
 
 cat $input_filename_3 > $output_filename_3
-# cat $input_filename_3a > $output_filename_3a
-# cat $input_filename_3b > $output_filename_3b
+cat $input_filename_3a > $output_filename_3a
+cat $input_filename_3b > $output_filename_3b
 # cat $input_filename_3c > $output_filename_3c
 # cat $input_filename_3d > $output_filename_3d
 # cat $input_filename_3e > $output_filename_3e
