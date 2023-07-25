@@ -92,7 +92,7 @@ N_ExptState_Decile5 = 10
 n_bin = 50
 GraphFolder = "Graphs"
 
-filename_start = "WholeGBMgenes_EqbrmOutput_RatesOnlyFit_Pchoice_Excl_InitialState_Expt_Ngen_1E5_"
+filename_start = "WholeGBMgenes_EqbrmOutput_RatesOnlyFit_Pchoice_Excl_InitialState_100U_Ngen_1E5_"
 filename_start_Graph = filename_start + 'Graph_'
 filename_ending = '.tsv'
 
@@ -181,7 +181,7 @@ ax.legend(fontsize=10,ncol=1,facecolor='white', framealpha=1.0)
 
 ax.set_xlim(-10,110)
 
-ax.set_ylim(0,1000)
+#ax.set_ylim(0,1000)
 
 ax.xaxis.set_tick_params(labelsize=12)
 ax.yaxis.set_tick_params(labelsize=12)
@@ -192,8 +192,8 @@ ax.set_ylabel("Number of loci", fontsize=12)
 #fig.tight_layout()
 #fig.subplots_adjust(top=0.5)
 hspace = 0.
-fig.savefig( os.path.join(GraphFolder,filename_start_Graph +"Mfrac_dist_"+fig_label_Expt+".png"), bbox_inches = 'tight')
-fig.savefig( os.path.join(GraphFolder,filename_start_Graph +"Mfrac_dist_"+fig_label_Expt+".pdf"), bbox_inches = 'tight')
+fig.savefig( os.path.join(GraphFolder,filename_start_Graph +"Mfrac_dist"+".png"), bbox_inches = 'tight')
+fig.savefig( os.path.join(GraphFolder,filename_start_Graph +"Mfrac_dist"+".pdf"), bbox_inches = 'tight')
 
 plt.show()
 # End Graph

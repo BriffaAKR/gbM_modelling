@@ -5,7 +5,7 @@ N_total_IDs = 14600 # This must be more than the total number of IDs in the anno
 # 'UseU' 'Excl'
 P_choice = "Excl"
 # "100U"  "100M"  'Expt'
-initial_state_choice = "Expt"
+initial_state_choice = "100U"
 
 N_gen_burn_in = 100*1000
 N_gen_code = '1E5'
