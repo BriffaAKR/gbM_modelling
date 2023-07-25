@@ -874,3 +874,120 @@ plt.show()
 
 
 ################################################
+
+# mCG level distribution
+# three simulated initial states 
+# 30 Col-like accessions
+
+
+# Start Graph
+fig, ax = plt.subplots(1,1,figsize=(3,5))
+
+for spine in ['left','right','top','bottom']:
+    ax.spines[spine].set_color('k')
+    ax.spines[spine].set_linewidth(0.8)
+ax.set_facecolor('white')
+
+#ax.grid(False)
+ax.grid(b=True, which='major', color='lightgrey', linestyle=':',linewidth=1)
+
+
+# convert to percentage
+values_scaler = 100
+x_start = 0.
+x_end = 100. 
+
+x_hist = np.arange(x_start+x_end/(2.*n_bin),x_end,x_end/n_bin)
+
+hist_Data_label = '30 Col-like Data'
+
+temp_cols_list = []
+for i_temp in range(10):
+    temp_cols_list.append('D3_meth_frac_'+str(i_temp))
+    temp_cols_list.append('D4_meth_frac_'+str(i_temp))
+    temp_cols_list.append('D5_meth_frac_'+str(i_temp))
+hist_Data, bins_Data = np.histogram(AllRepsMethFracs_Expt_df[temp_cols_list].values*values_scaler, bins=n_bin, range=(x_start,x_end))
+hist_Data = hist_Data/N_reps # normalise
+# ax.axvline(np.nanmean(AllRepsMethFracs_Expt_df[temp_cols_list].values*values_scaler), linestyle='--', color='g')
+# ax.plot(x_hist, hist_Data,  linewidth = 2, color=col_data_Col0, linestyle='-',
+#                   label='%s\nMean = %.1f %%' % (hist_Data_label,np.nanmean(AllRepsMethFracs_Expt_df[temp_cols_list].values*values_scaler)) )
+ax.plot(x_hist, hist_Data,  linewidth = 2, color=col_data_Col0, linestyle='-',
+                  label='%s' % (hist_Data_label) )
+
+
+
+
+hist_Sims_Expt_label = 'Simulated (Col-0)'
+
+temp_cols_list = []
+for i_temp in range(N_reps):
+    temp_cols_list.append('Sim_meth_frac_'+str(i_temp))
+hist_Sims_Expt, bins_Sim = np.histogram(AllRepsMethFracs_Expt_df[temp_cols_list].values*values_scaler, bins=n_bin, range=(x_start,x_end))
+hist_Sims_Expt = hist_Sims_Expt/N_reps # normalise
+# ax.axvline(np.nanmean(AllRepsMethFracs_Expt_df[temp_cols_list].values*values_scaler), linestyle='-', color=col_Sim_Expt)
+# ax.plot(x_hist, hist_Sims_Expt,  linewidth = 2, color=col_Sim_Expt,linestyle='-',
+#                   label='%s\nMean = %.1f %%' % (hist_Sims_Expt_label,np.nanmean(AllRepsMethFracs_Expt_df[temp_cols_list].values*values_scaler)) )
+ax.plot(x_hist, hist_Sims_Expt,  linewidth = 2, color=col_Sim_Expt,linestyle='-',
+                  label='%s' % (hist_Sims_Expt_label) )
+
+
+hist_Sims_100M_label = 'Simulated (All $M$)'
+
+temp_cols_list = []
+for i_temp in range(N_reps):
+    temp_cols_list.append('Sim_meth_frac_'+str(i_temp))
+hist_Sims_100M, bins_Sim = np.histogram(AllRepsMethFracs_100M_df[temp_cols_list].values*values_scaler, bins=n_bin, range=(x_start,x_end))
+hist_Sims_100M = hist_Sims_100M/N_reps # normalise
+# ax.axvline(np.nanmean(AllRepsMethFracs_100M_df[temp_cols_list].values*values_scaler), linestyle='--', color=col_Sim_100M)
+# ax.plot(x_hist, hist_Sims_100M,  linewidth = 2, color=col_Sim_100M,linestyle='--',
+#                   label='%s\nMean = %.1f %%' % (hist_Sims_100M_label,np.nanmean(AllRepsMethFracs_100M_df[temp_cols_list].values*values_scaler)) )
+ax.plot(x_hist, hist_Sims_100M,  linewidth = 2, color=col_Sim_100M,linestyle='--',
+                  label='%s' % (hist_Sims_100M_label) )
+
+
+hist_Sims_100U_label = 'Simulated (All $U$)'
+
+temp_cols_list = []
+for i_temp in range(N_reps):
+    temp_cols_list.append('Sim_meth_frac_'+str(i_temp))
+hist_Sims_100U, bins_Sim = np.histogram(AllRepsMethFracs_100U_df[temp_cols_list].values*values_scaler, bins=n_bin, range=(x_start,x_end))
+hist_Sims_100U = hist_Sims_100U/N_reps # normalise
+# ax.axvline(np.nanmean(AllRepsMethFracs_100U_df[temp_cols_list].values*values_scaler), linestyle=':', color=col_Sim_100U)
+# ax.plot(x_hist, hist_Sims_100U,  linewidth = 2, color=col_Sim_100U,linestyle=':',
+#                   label='%s\nMean = %.1f %%' % (hist_Sims_100U_label,np.nanmean(AllRepsMethFracs_100U_df[temp_cols_list].values*values_scaler)) )
+ax.plot(x_hist, hist_Sims_100U,  linewidth = 2, color=col_Sim_100U,linestyle=':',
+                  label='%s' % (hist_Sims_100U_label) )
+
+
+# fig.suptitle(title_sting_single_time, fontsize=12)
+
+
+ax.legend(fontsize=10,ncol=1,facecolor='white', framealpha=1.0,handlelength=2.0)
+
+
+ax.set_xlim(-10,110)
+
+
+
+ax.set_ylim(0,1000)
+
+
+ax.xaxis.set_tick_params(labelsize=12)
+ax.yaxis.set_tick_params(labelsize=12)
+
+
+ax.set_xlabel("Methylation percentage", fontsize=12)
+ax.set_ylabel("Number of loci", fontsize=12)
+
+
+#fig.tight_layout()
+fig.subplots_adjust(top=0.5)
+
+fig.savefig( os.path.join(GraphFolder,filename_start +"Mfrac_InitialStates_Data"+".png"), bbox_inches = 'tight')
+
+
+plt.show()
+# End Graph
+
+
+###########################################
