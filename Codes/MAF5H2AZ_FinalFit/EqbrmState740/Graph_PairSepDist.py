@@ -220,9 +220,9 @@ ax[1].plot(x_vals_corrns, PairSep_MU_Sim_array,  linewidth = 1, color='k',label=
 ax[1].fill_between(x_vals_corrns, PairSep_MU_Data_array,PairSep_MU_Data_array+PairSep_XX_Data_array,  
                     alpha = 0.5, color='green',label='$MU$-pairs Data')
 
-ax[2].plot(x_vals_corrns, PairSep_UU_Sim_array,  linewidth = 1, color='k',label='Simulated')
+ax[2].plot(x_vals_corrns, PairSep_UU_Sim_array,  linewidth = 1, color='k',label='740 reps. simulated')
 ax[2].fill_between(x_vals_corrns, PairSep_UU_Data_array,PairSep_UU_Data_array+PairSep_XX_Data_array,  
-                    alpha = 0.5, color='green',label='740 Col-like Data')
+                    alpha = 0.5, color='green',label='740 Col-like data')
 
 #fig.suptitle(title_sting_single_time, fontsize=12)
 #ax[0].legend(fontsize=12,ncol=1,facecolor='white', framealpha=1.0)
