@@ -1,6 +1,9 @@
 # gbM_modelling
 
-Scripts for [Unified establishment and epigenetic inheritance of DNA methylation through cooperative MET1 activity](https://www.biorxiv.org/content/10.1101/2022.09.12.507517v1)
+Scripts for:
+Millennia-long epigenetic fluctuations generate intragenic DNA methylation variance in Arabidopsis populations 
+and the earlier pre-print:
+[Unified establishment and epigenetic inheritance of DNA methylation through cooperative MET1 activity](https://www.biorxiv.org/content/10.1101/2022.09.12.507517v1)
 
 ## How to run the code
 Code written to run on a linux cluster using anaconda instalation: anaconda3-5.2.0
