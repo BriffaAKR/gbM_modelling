@@ -20,6 +20,11 @@ https://zenodo.org/record/7143326#.Y0PolXbMKUl
 Unzip and place this in folder:
 Sim_Input_Files_Final
 
+
+## Repository DOI:
+10.5281/zenodo.8332883
+
+
 Codes are run in three steps. 
 1. Main simulation (or data analysis) code which creates output batch files (by splitting target genes into several batches)
 2. ConcatFiles code which concatinates the batch files into complete output files
